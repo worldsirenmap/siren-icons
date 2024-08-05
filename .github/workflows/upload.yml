@@ -26,3 +26,4 @@ jobs:
           remote-password: ${{secrets.SIRENICONS_UPLOAD_PASSWORD}}
           local-path: "./dist/siren-marker"
           remote-path: "/sprite/siren-marker"
+          mode: "full"
