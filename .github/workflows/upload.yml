@@ -9,9 +9,9 @@ jobs:
       - name: Upload icons per SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          server: ${WSM_SRV_01_IP}              
-          username: ${SIRENICONS_UPLOAD_USER}
-          password: ${SIRENICONS_UPLOAD_PASSWORD}
+          server: ${{WSM_SRV_01_IP}}
+          username: ${{SIRENICONS_UPLOAD_USER}}
+          password: ${{SIRENICONS_UPLOAD_PASSWORD}}
           remote_path: /sprite/siren-icons
           sftp_only: true
           delete_remote_files: true      
