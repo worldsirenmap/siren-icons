@@ -1,5 +1,8 @@
 name: Deploy icons to server
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   upload-siren-icons:
     name: Upload siren icons
@@ -7,6 +10,8 @@ jobs:
     steps:
       - name: Check out icons
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Upload icons per SFTP
         uses: milanmk/actions-file-deployer@master
         with:
