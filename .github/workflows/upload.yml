@@ -19,4 +19,5 @@ jobs:
           remote-host: ${{vars.WSM_SRV_01_IP}}
           remote-user: ${{secrets.SIRENICONS_UPLOAD_USER}}
           remote-password: ${{secrets.SIRENICONS_UPLOAD_PASSWORD}}
+          local-path: "icons"
           remote-path: "/sprite/siren-icons"
