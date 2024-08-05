@@ -1,17 +1,17 @@
 name: Deploy icons to server
 on: [push]
 jobs:
-  Upload-Siren-Icons:
+  upload-siren-icons:
+    name: Upload siren icons
     runs-on: ubuntu-latest
     steps:
       - name: Check out icons
         uses: actions/checkout@v4
       - name: Upload icons per SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: milanmk/actions-file-deployer@master
         with:
-          server: ${{vars.WSM_SRV_01_IP}}
-          username: ${{secrets.SIRENICONS_UPLOAD_USER}}
-          password: ${{secrets.SIRENICONS_UPLOAD_PASSWORD}}
-          remote_path: /sprite/siren-icons
-          sftp_only: true
-          delete_remote_files: true      
+          remote-protocol: "sftp"
+          remote-host: ${{vars.WSM_SRV_01_IP}}
+          remote-user: ${{secrets.SIRENICONS_UPLOAD_USER}}
+          remote-password: ${{secrets.SIRENICONS_UPLOAD_PASSWORD}}
+          remote-path: "/sprite/siren-icons"
