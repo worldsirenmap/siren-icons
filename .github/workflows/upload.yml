@@ -1,0 +1,17 @@
+name: Deploy icons to server
+on: [push]
+jobs:
+  Upload-Siren-Icons:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out icons
+        uses: actions/checkout@v4
+      - name: Upload icons per SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${WSM_SRV_01_IP}              
+          username: ${SIRENICONS_UPLOAD_USER}
+          password: ${SIRENICONS_UPLOAD_PASSWORD}
+          remote_path: /sprite/siren-icons
+          sftp_only: true
+          delete_remote_files: true      
