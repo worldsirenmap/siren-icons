@@ -1,23 +1,28 @@
-name: Deploy icons to server
+name: Deploy siren marker to server
 on:
   push:
     branches:
       - main
 jobs:
-  upload-siren-icons:
-    name: Upload siren icons
+  deploy-siren-marker:
+    name: Deploy siren marker
     runs-on: ubuntu-latest
     steps:
-      - name: Check out icons
+      - name: Check out
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Upload icons per SFTP
+      - name: Generate siren markers
+        working-directory: ./script
+        run: |
+            npm install
+            node merge.js        
+      - name: Upload siren markers
         uses: milanmk/actions-file-deployer@master
         with:
           remote-protocol: "sftp"
           remote-host: ${{vars.WSM_SRV_01_IP}}
           remote-user: ${{secrets.SIRENICONS_UPLOAD_USER}}
           remote-password: ${{secrets.SIRENICONS_UPLOAD_PASSWORD}}
-          local-path: "icons"
-          remote-path: "/sprite/siren-icons"
+          local-path: "./dist/siren-marker"
+          remote-path: "/sprite/siren-marker"
