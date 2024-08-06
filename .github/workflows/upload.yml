@@ -12,28 +12,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
+      - name: Prepare node.js
+        working-directory: ./script
+        run: npm install
+      
       - name: Generate siren markers
         working-directory: ./script
-        run: |
-            npm install
-            node merge.js        
-      - name: Upload siren markers
-        uses: milanmk/actions-file-deployer@master
-        with:
-          remote-protocol: "sftp"
-          remote-host: ${{vars.SFTP_HOST}}
-          remote-user: ${{secrets.SFTP_USER}}
-          ssh-private-key: ${{secrets.SFTP_PRIVATE_KEY}}
-          local-path: "./dist/siren-marker"
-          remote-path: "/mapdata/sprite/siren-marker"
-          sync: "full"
-      - name: Upload siren icons
-        uses: milanmk/actions-file-deployer@master
-        with:
-          remote-protocol: "sftp"
-          remote-host: ${{vars.SFTP_HOST}}
-          remote-user: ${{secrets.SFTP_USER}}
-          ssh-private-key: ${{secrets.SFTP_PRIVATE_KEY}}
-          local-path: "./icons"
-          remote-path: "/assets/siren-icons"
-          sync: "full"
+        run: node merge.js        
+      
+      - name: Upload files
+        working-directory: ./script
+        run: node upload.js        
+        env:
+            SFTP_HOST: ${{secrets.SFTP_HOST}}
+            SFTP_USER: ${{secrets.SFTP_USER}}
+            SFTP_PRIVATE_KEY: ${{secrets.SFTP_PRIVATE_KEY}}
