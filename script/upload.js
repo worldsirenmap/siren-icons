@@ -7,8 +7,8 @@ const MARKER_DIR = './../dist/siren-marker/'
 const ICONS_REMOTE_PATH = "/assets/siren-icons/"
 const ICONS_DIR = './../icons/'
 
-const GLYPHS_REMOTE_PATH = "/mapdata/sprites/glyphs/"
-const GLYPHS_DIR = './../glyphs/'
+const GENERALICONS_REMOTE_PATH = "/mapdata/sprites/general-icons/"
+const GENERALICONS_DIR = './../general-icons/'
 
 const PUT_OPTIONS = {
     writeStreamOptions: {
@@ -53,18 +53,18 @@ for (const file of iconFileList) {
     await sftp.put(createReadStream(ICONS_DIR + file.name), ICONS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
 
-console.log("Upload glyphs")
-const currentGlyphList = await sftp.list(GLYPHS_REMOTE_PATH)
-for (const file of currentGlyphList) {
-    await sftp.delete(GLYPHS_REMOTE_PATH + file.name)
+console.log("Upload general icons")
+const currentGeneralIconList = await sftp.list(GENERALICONS_REMOTE_PATH)
+for (const file of currentGeneralIconList) {
+    await sftp.delete(GENERALICONS_REMOTE_PATH + file.name)
 }
 
-const glyphFileList = readdirSync(GLYPHS_DIR, { withFileTypes: true })
+const generalIconFileList = readdirSync(GENERALICONS_DIR, { withFileTypes: true })
     .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
 
-for (const file of glyphFileList) {
+for (const file of generalIconFileList) {
     console.log(file.name)
-    await sftp.put(createReadStream(GLYPHS_DIR + file.name), GLYPHS_REMOTE_PATH + file.name, PUT_OPTIONS)
+    await sftp.put(createReadStream(GENERALICONS_DIR + file.name), GENERALICONS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
 
 console.log("Closing connection")

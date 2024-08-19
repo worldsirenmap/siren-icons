@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 import { XMLBuilder, XMLParser } from 'fast-xml-parser';
 
-const MARKER_DIR = './../marker/'
-const ICONS_DIR = './../icons/'
+const MARKER_DIR = './../marker-bases/'
+const ICONS_DIR = './../siren-icons/'
 const OUTPUT_DIR = './../dist/siren-marker/'
 
 if (!existsSync(OUTPUT_DIR)) {
