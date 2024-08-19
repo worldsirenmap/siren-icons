@@ -54,15 +54,15 @@ for (const file of iconFileList) {
 }
 
 console.log("Upload assets")
-const currentIconList = await sftp.list(ASSETS_REMOTE_PATH)
-for (const file of currentIconList) {
+const currentAssetList = await sftp.list(ASSETS_REMOTE_PATH)
+for (const file of currentAssetList) {
     await sftp.delete(ASSETS_REMOTE_PATH + file.name)
 }
 
-const iconFileList = readdirSync(ASSETS_DIR, { withFileTypes: true })
+const assetFileList = readdirSync(ASSETS_DIR, { withFileTypes: true })
     .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
 
-for (const file of iconFileList) {
+for (const file of assetFileList) {
     console.log(file.name)
     await sftp.put(createReadStream(ASSETS_DIR + file.name), ASSETS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
