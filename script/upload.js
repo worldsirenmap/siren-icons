@@ -7,6 +7,9 @@ const MARKER_DIR = './../dist/siren-marker/'
 const ICONS_REMOTE_PATH = "/assets/siren-icons/"
 const ICONS_DIR = './../icons/'
 
+const ASSETS_REMOTE_PATH = "/assets/"
+const ASSETS_DIR = './../assets/'
+
 const PUT_OPTIONS = {
     writeStreamOptions: {
       mode: 0o664
@@ -48,6 +51,20 @@ const iconFileList = readdirSync(ICONS_DIR, { withFileTypes: true })
 for (const file of iconFileList) {
     console.log(file.name)
     await sftp.put(createReadStream(ICONS_DIR + file.name), ICONS_REMOTE_PATH + file.name, PUT_OPTIONS)
+}
+
+console.log("Upload assets")
+const currentIconList = await sftp.list(ASSETS_REMOTE_PATH)
+for (const file of currentIconList) {
+    await sftp.delete(ASSETS_REMOTE_PATH + file.name)
+}
+
+const iconFileList = readdirSync(ASSETS_DIR, { withFileTypes: true })
+    .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+
+for (const file of iconFileList) {
+    console.log(file.name)
+    await sftp.put(createReadStream(ASSETS_DIR + file.name), ASSETS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
 
 console.log("Closing connection")
