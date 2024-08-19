@@ -5,7 +5,7 @@ const MARKER_REMOTE_PATH = "/mapdata/sprites/siren-marker/"
 const MARKER_DIR = './../dist/siren-marker/'
 
 const ICONS_REMOTE_PATH = "/assets/siren-icons/"
-const ICONS_DIR = './../icons/'
+const ICONS_DIR = './../siren-icons/'
 
 const GENERALICONS_REMOTE_PATH = "/mapdata/sprites/general-icons/"
 const GENERALICONS_DIR = './../general-icons/'
