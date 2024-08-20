@@ -21,15 +21,33 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="7.9444444"
-     inkscape:cx="30.020979"
-     inkscape:cy="45"
+     inkscape:zoom="5.6175705"
+     inkscape:cx="35.424566"
+     inkscape:cy="53.670888"
      inkscape:window-width="1536"
      inkscape:window-height="953"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
+     inkscape:current-layer="svg1"
+     showgrid="true">
+    <inkscape:grid
+       id="grid2"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="1"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       dotted="false"
+       gridanglex="30"
+       gridanglez="30"
+       visible="true" />
+  </sodipodi:namedview>
   <path
      d="M 30,0 C 13.431458,0 0,13.431458 0,30 0.00571609,34.387594 0.97377637,38.72053 2.8359375,42.693359 L 22.755861,85.384766 C 24.069945,88.198961 26.894116,89.998238 30,90 c 3.104728,-0.0022 5.927833,-1.800487 7.242188,-4.613281 l 19.92187,-42.69336 C 59.026223,38.72053 59.994284,34.387594 60,30 60,13.431458 46.568542,0 30,0 Z"
      fill="#4e7b9d"
@@ -40,5 +58,11 @@
      r="15"
      fill="#f24b18"
      id="circle1"
-     style="fill:#f19718" />
+     style="fill:#ffffff" />
+  <circle
+     style="fill:#f24b18;stroke-width:122.896"
+     id="path2"
+     cx="30"
+     cy="30"
+     r="7" />
 </svg>
