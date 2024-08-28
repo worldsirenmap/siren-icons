@@ -5,10 +5,6 @@ const MARKER_DIR = './../marker-bases/'
 const ICONS_DIR = './../siren-icons/'
 const OUTPUT_DIR = './../dist/sprites/'
 
-if (!existsSync(OUTPUT_DIR)) {
-    mkdirSync(OUTPUT_DIR, { recursive: true })
-}
-
 const parser = new XMLParser({
     ignoreAttributes : false
 });
@@ -40,6 +36,7 @@ for (const iconFile of iconFileList) {
         const outputData = builder.build(markerData);
         const outputDir = markerFile.name.toLowerCase().slice(0, -4) + "-siren-marker/"
         
+		mkdirSync(OUTPUT_DIR + outputDir, { recursive: true })
         writeFileSync(OUTPUT_DIR + outputDir + iconFile.name, outputData)
     }
 }
