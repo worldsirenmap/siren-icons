@@ -1,8 +1,8 @@
 import Client from 'ssh2-sftp-client'
 import { readdirSync, createReadStream } from 'fs';
 
-const MARKER_REMOTE_PATH = "/mapdata/sprites/siren-marker/"
-const MARKER_DIR = './../dist/siren-marker/'
+const SPRITE_REMOTE_PATH = "/mapdata/sprites/"
+const SPRITE_DIR = './../dist/sprites/'
 
 const ICONS_REMOTE_PATH = "/assets/siren-icons/"
 const ICONS_DIR = './../siren-icons/'
@@ -26,17 +26,21 @@ await sftp.connect({
 })
 
 console.log("Upload siren markers")
-const currentMarkerList = await sftp.list(MARKER_REMOTE_PATH)
-for (const file of currentMarkerList) {
-    await sftp.delete(MARKER_REMOTE_PATH + file.name)
-}
+sftp.rmdir(SPRITE_REMOTE_PATH + "/*" , true)
 
-const markerFileList = readdirSync(MARKER_DIR, { withFileTypes: true })
-    .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+const markerFileDirs = readdirSync(SPRITE_DIR, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
 
-for (const file of markerFileList) {
-    console.log(file.name)
-    await sftp.put(createReadStream(MARKER_DIR + file.name), MARKER_REMOTE_PATH + file.name, PUT_OPTIONS)
+for (const dir of markerFileDirs) {
+	sftp.mkdir(SPRITE_REMOTE_PATH + dir, true)
+	
+	const markerFileList = readdirSync(SPRITE_DIR, { withFileTypes: true })
+		.filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+		
+	for (const file of markerFileList) {
+		console.log(dir + file.name)
+		await sftp.put(createReadStream(SPRITE_DIR + dir + file.name), SPRITE_REMOTE_PATH + dir + file.name, PUT_OPTIONS)
+	}
 }
 
 console.log("Upload siren icons")

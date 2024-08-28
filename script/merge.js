@@ -3,7 +3,7 @@ import { XMLBuilder, XMLParser } from 'fast-xml-parser';
 
 const MARKER_DIR = './../marker-bases/'
 const ICONS_DIR = './../siren-icons/'
-const OUTPUT_DIR = './../dist/siren-marker/'
+const OUTPUT_DIR = './../dist/sprites/'
 
 if (!existsSync(OUTPUT_DIR)) {
     mkdirSync(OUTPUT_DIR, { recursive: true })
@@ -38,8 +38,8 @@ for (const iconFile of iconFileList) {
         ]
 
         const outputData = builder.build(markerData);
-        const outputFilename = iconFile.name.toLowerCase().slice(0, -4) + "-" + markerFile.name.toLowerCase().slice(0, -4) + ".svg";
+        const outputDir = markerFile.name.toLowerCase().slice(0, -4) + "-siren-marker/"
         
-        writeFileSync(OUTPUT_DIR + outputFilename, outputData)
+        writeFileSync(OUTPUT_DIR + outputDir + iconFile.name, outputData)
     }
 }
