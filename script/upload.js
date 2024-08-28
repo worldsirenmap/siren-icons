@@ -26,15 +26,18 @@ await sftp.connect({
 })
 
 console.log("Upload siren markers")
-sftp.rmdir(SPRITE_REMOTE_PATH , true)
-
 const markerFileDirs = readdirSync(SPRITE_DIR, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
 
 for (const dir of markerFileDirs) {
 	const dirName = dir.name + "/"
 	
-	sftp.mkdir(SPRITE_REMOTE_PATH + dirName, true)
+	await sftp.mkdir(SPRITE_REMOTE_PATH + dirName, true)
+	
+	const currentMarkerList = await sftp.list(SPRITE_REMOTE_PATH + dirName)
+	for (const file of currentMarkerList) {
+		await sftp.delete(SPRITE_REMOTE_PATH + dirName + file.name)
+	}
 	
 	const markerFileList = readdirSync(SPRITE_DIR, { withFileTypes: true })
 		.filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
