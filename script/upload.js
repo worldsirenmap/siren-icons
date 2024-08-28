@@ -26,7 +26,7 @@ await sftp.connect({
 })
 
 console.log("Upload siren markers")
-sftp.rmdir(SPRITE_REMOTE_PATH + "/*" , true)
+sftp.rmdir(SPRITE_REMOTE_PATH , true)
 
 const markerFileDirs = readdirSync(SPRITE_DIR, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
