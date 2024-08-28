@@ -49,6 +49,8 @@ for (const dir of markerFileDirs) {
 }
 
 console.log("Upload siren icons")
+await sftp.mkdir(ICONS_REMOTE_PATH, true)
+
 const currentIconList = await sftp.list(ICONS_REMOTE_PATH)
 for (const file of currentIconList) {
     await sftp.delete(ICONS_REMOTE_PATH + file.name)
