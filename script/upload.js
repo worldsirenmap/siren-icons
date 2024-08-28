@@ -39,7 +39,7 @@ for (const dir of markerFileDirs) {
 		await sftp.delete(SPRITE_REMOTE_PATH + dirName + file.name)
 	}
 	
-	const markerFileList = readdirSync(SPRITE_DIR, { withFileTypes: true })
+	const markerFileList = readdirSync(SPRITE_DIR + dirName, { withFileTypes: true })
 		.filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
 		
 	for (const file of markerFileList) {
@@ -65,6 +65,8 @@ for (const file of iconFileList) {
 }
 
 console.log("Upload general icons")
+await sftp.mkdir(GENERALICONS_REMOTE_PATH, true)
+
 const currentGeneralIconList = await sftp.list(GENERALICONS_REMOTE_PATH)
 for (const file of currentGeneralIconList) {
     await sftp.delete(GENERALICONS_REMOTE_PATH + file.name)
