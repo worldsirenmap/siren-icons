@@ -32,14 +32,16 @@ const markerFileDirs = readdirSync(SPRITE_DIR, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
 
 for (const dir of markerFileDirs) {
-	sftp.mkdir(SPRITE_REMOTE_PATH + dir, true)
+	const dirName = dir.name + "/"
+	
+	sftp.mkdir(SPRITE_REMOTE_PATH + dirName, true)
 	
 	const markerFileList = readdirSync(SPRITE_DIR, { withFileTypes: true })
 		.filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
 		
 	for (const file of markerFileList) {
-		console.log(dir + file.name)
-		await sftp.put(createReadStream(SPRITE_DIR + dir + file.name), SPRITE_REMOTE_PATH + dir + file.name, PUT_OPTIONS)
+		console.log(dirName + file.name)
+		await sftp.put(createReadStream(SPRITE_DIR + dirName + file.name), SPRITE_REMOTE_PATH + dirName + file.name, PUT_OPTIONS)
 	}
 }
 
