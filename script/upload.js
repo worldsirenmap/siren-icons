@@ -63,7 +63,7 @@ const fileNames = []
 
 for (const file of iconFileList) {
     console.log(file.name)
-    fileNames.append(file.name)
+    fileNames.push(file.name)
     await sftp.put(createReadStream(ICONS_DIR + file.name), ICONS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
 
