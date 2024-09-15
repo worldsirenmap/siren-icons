@@ -10,4 +10,4 @@ Issues for missing icons can also be created, please add images/links as a templ
 
 The icons are automatically combined into a PNG sprite for the WorldSirenMap.
 
-![Siren icon sprite](https://api.worldsirenmap.net/map/sprite/siren-marker.png?)
+![Siren icon sprite](https://api.worldsirenmap.net/map/sprite/default-siren-marker.png)
