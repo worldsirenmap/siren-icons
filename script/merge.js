@@ -35,6 +35,6 @@ for (const markerFile of listSvgFiles(MARKER_DIR)) {
         ]
 
         mkdirSync(OUTPUT_DIR + markerDir, { recursive: true })
-        writeFileSync(OUTPUT_DIR + markerDir + iconFile, builder.build(markerData))
+        writeFileSync(OUTPUT_DIR + markerDir + iconFile.split("/").pop(), builder.build(markerData))
     }
 }
