@@ -3,6 +3,7 @@ import { XMLBuilder, XMLParser } from 'fast-xml-parser';
 
 const MARKER_DIR = './../marker-bases/'
 const ICONS_DIR = './../siren-icons/'
+const SPECIAL_ICONS_DIR = './../special-siren-icons/'
 const OUTPUT_DIR = './../dist/sprites/'
 
 const parser = new XMLParser({
@@ -14,17 +15,17 @@ const builder = new XMLBuilder({
     suppressEmptyNode: true
 });
 
-const markerFileList = readdirSync(MARKER_DIR, { withFileTypes: true })
+const listSvgFiles = (dir) => readdirSync(dir, { withFileTypes: true })
     .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+    .map(entry => dir + entry.name)
 
-const iconFileList = readdirSync(ICONS_DIR, { withFileTypes: true })
-    .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
-    
 
-for (const iconFile of iconFileList) {
-    for (const markerFile of markerFileList) {
-        const iconData = parser.parse(readFileSync(ICONS_DIR + iconFile.name, 'utf8'))
-        const markerData = parser.parse(readFileSync(MARKER_DIR + markerFile.name, 'utf8'))
+for (const markerFile of listSvgFiles(MARKER_DIR)) {
+    const markerDir = markerFile.split("/").pop().split(".svg").shift() + "-siren-marker/"
+
+    for (const iconFile of [...listSvgFiles(ICONS_DIR), ...listSvgFiles(SPECIAL_ICONS_DIR)]) {
+        const iconData = parser.parse(readFileSync(iconFile, 'utf8'))
+        const markerData = parser.parse(readFileSync(markerFile, 'utf8'))
 
         iconData.svg.path['@_transform'] = 'translate(10, 10)'
 
@@ -33,10 +34,7 @@ for (const iconFile of iconFileList) {
             iconData.svg.path,
         ]
 
-        const outputData = builder.build(markerData);
-        const outputDir = markerFile.name.toLowerCase().slice(0, -4) + "-siren-marker/"
-        
-		mkdirSync(OUTPUT_DIR + outputDir, { recursive: true })
-        writeFileSync(OUTPUT_DIR + outputDir + iconFile.name, outputData)
+        mkdirSync(OUTPUT_DIR + markerDir, { recursive: true })
+        writeFileSync(OUTPUT_DIR + markerDir + iconFile, builder.build(markerData))
     }
 }

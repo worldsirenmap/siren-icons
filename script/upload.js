@@ -30,22 +30,22 @@ const markerFileDirs = readdirSync(SPRITE_DIR, { withFileTypes: true })
     .filter(entry => entry.isDirectory())
 
 for (const dir of markerFileDirs) {
-	const dirName = dir.name + "/"
-	
-	await sftp.mkdir(SPRITE_REMOTE_PATH + dirName, true)
-	
-	const currentMarkerList = await sftp.list(SPRITE_REMOTE_PATH + dirName)
-	for (const file of currentMarkerList) {
-		await sftp.delete(SPRITE_REMOTE_PATH + dirName + file.name)
-	}
-	
-	const markerFileList = readdirSync(SPRITE_DIR + dirName, { withFileTypes: true })
-		.filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
-		
-	for (const file of markerFileList) {
-		console.log(dirName + file.name)
-		await sftp.put(createReadStream(SPRITE_DIR + dirName + file.name), SPRITE_REMOTE_PATH + dirName + file.name, PUT_OPTIONS)
-	}
+    const dirName = dir.name + "/"
+    
+    await sftp.mkdir(SPRITE_REMOTE_PATH + dirName, true)
+    
+    const currentMarkerList = await sftp.list(SPRITE_REMOTE_PATH + dirName)
+    for (const file of currentMarkerList) {
+        await sftp.delete(SPRITE_REMOTE_PATH + dirName + file.name)
+    }
+    
+    const markerFileList = readdirSync(SPRITE_DIR + dirName, { withFileTypes: true })
+        .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
+        
+    for (const file of markerFileList) {
+        console.log(dirName + file.name)
+        await sftp.put(createReadStream(SPRITE_DIR + dirName + file.name), SPRITE_REMOTE_PATH + dirName + file.name, PUT_OPTIONS)
+    }
 }
 
 console.log("Upload siren icons")
