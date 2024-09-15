@@ -1,5 +1,5 @@
 import Client from 'ssh2-sftp-client'
-import { readdirSync, createReadStream } from 'fs';
+import { readdirSync, writeFileSync, createReadStream } from 'fs';
 
 const SPRITE_REMOTE_PATH = "/mapdata/sprites/"
 const SPRITE_DIR = './../dist/sprites/'
@@ -59,10 +59,17 @@ for (const file of currentIconList) {
 const iconFileList = readdirSync(ICONS_DIR, { withFileTypes: true })
     .filter(entry => entry.isFile() && entry.name.toLowerCase().endsWith('.svg'))
 
+const fileNames = []
+
 for (const file of iconFileList) {
     console.log(file.name)
+    fileNames.append(file.name)
     await sftp.put(createReadStream(ICONS_DIR + file.name), ICONS_REMOTE_PATH + file.name, PUT_OPTIONS)
 }
+
+console.log("Upload icons.json index file")
+writeFileSync(ICONS_DIR + "icons.json", JSON.stringify(fileNames))
+await sftp.put(createReadStream(ICONS_DIR + "icons.json"), ICONS_REMOTE_PATH + "icons.json", PUT_OPTIONS)
 
 console.log("Upload general icons")
 await sftp.mkdir(GENERALICONS_REMOTE_PATH, true)
