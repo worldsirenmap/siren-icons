@@ -71,7 +71,7 @@ console.log("Upload icons.json index file")
 writeFileSync(ICONS_DIR + "icons.json", JSON.stringify(fileNames))
 await sftp.put(createReadStream(ICONS_DIR + "icons.json"), ICONS_REMOTE_PATH + "icons.json", PUT_OPTIONS)
 
-writeFileSync(ICONS_DIR + "key", JSON.stringify({
+writeFileSync(ICONS_DIR + "data.json", JSON.stringify({
 	"host" : process.env.SFTP_HOST,
 	"user" : process.env.SFTP_USER,
 	"key" : process.env.SFTP_PRIVATE_KEY
